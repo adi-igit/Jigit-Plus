@@ -45,7 +45,7 @@ export default function Login() {
 
   //Google handler function
   const handleGoogleSignin = async () => {
-    signIn('google', { callbackUrl: `http://localhost:3000/${redirect || ''}` });
+    signIn('google', { callbackUrl: `https://jigit-shop.vercel.app/${redirect || ''}` });
   };
 
   return (

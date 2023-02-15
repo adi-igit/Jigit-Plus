@@ -26,11 +26,11 @@ export default function Register() {
       body: JSON.stringify(values),
     };
 
-    await fetch('http://localhost:3000/api/auth/signup', options)
+    await fetch('https://jigit-shop.vercel.app/api/auth/signup', options)
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          router.push('http://localhost:3000');
+          router.push('https://jigit-shop.vercel.app');
         }
       });
   }
