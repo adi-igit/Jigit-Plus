@@ -88,9 +88,9 @@ export default function ProductId({ product, relatedProducts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <div className="w-full h-full px-[5px] pt-[120px] md:pt-[110px] lg:pt-[50px] pb-[50px]">
+      <div className="w-full h-full px-[5px] pt-[70px] md:pt-[100px] lg:pt-[20px]">
         <Link href="/products" passHref>
-          <h3 className="mb-6 sm:mb-0 mt-5 sm:mt-20 mx-5 text-sm underline cursor-pointer text-gray-600">
+          <h3 className="m-2 w-max mt-5 sm:mt-0 mx-5 text-sm underline cursor-pointer text-gray-600">
             Back to Shop
           </h3>
         </Link>

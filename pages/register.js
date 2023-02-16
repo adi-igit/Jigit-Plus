@@ -30,7 +30,7 @@ export default function Register() {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          router.push('https://jigit-shop.vercel.app');
+          router.push('https://jigit-shop.vercel.app/login');
         }
       });
   }

@@ -41,7 +41,7 @@ export default function SideDrop({ drop, setDrop }) {
           initial={{ x: -100 }}
           animate={{ x: 0 }}
           transition={{ duration: 1 }}
-          className="min-h-[110vh] w-[300px] sm:w-[400px] absolute top-[-20px] sm:top-0 bottom-0 left-[-20px] bg-white text-black z-[998]"
+          className="h-full w-[300px] sm:w-[400px] fixed bg-white text-black z-[999]"
           whileInView={{ once: false }}
         >
           <TfiClose

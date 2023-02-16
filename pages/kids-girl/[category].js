@@ -84,21 +84,25 @@ export default function Products({ products }) {
           {paginatedPosts.map((product) => (
             <div className="mt-[10px] w-max h-max" key={product._id}>
               <div>
-                <Link href={`/product/${product._id}`}>
+                <div className="relative">
                   <img
                     className="w-[300px] h-[400px] object-cover"
                     key={product._id}
                     src={product.imageIntro}
                     alt=""
                   />
-                </Link>
+                  <Link href={`/product/${product._id}`}>
+                    <button className="absolute bottom-5 left-[50%] text-1xl text-gray-300 border py-[2px] px-[10px] rounded-full bg-black/20">
+                      +
+                    </button>
+                  </Link>
+                </div>
                 <div>
                   <h3 className="text-[12px] py-[5px]">{product.name}</h3>
                   <div className="flex justify-between">
                     <p className="text-[12px]">{product.category}</p>
                     <p className="text-[12px]">{product.slug}</p>
                   </div>
-                  <button className="primary-button">ADD TO CART</button>
                 </div>
               </div>
             </div>

@@ -6,7 +6,7 @@ export default function FooterMain() {
       <div>
         <table>
           <tbody>
-            <tr className='sm:pl-20 px-2 flex gap-5 sm:gap-10 text-[13px]'>
+            <tr className='sm:pl-20 px-2 flex flex-wrap gap-5 sm:gap-10 text-[11px] sm:text-[13px]'>
               <td>
                 <p className='font-bold py-2'>HELP</p>
                 <p className='py-1 cursor-pointer'>SHOP AT JIGIT+</p>
@@ -46,7 +46,7 @@ export default function FooterMain() {
           </tbody>
         </table>
       </div>
-      <div className='mt-[100px] px-2 sm:px-0 flex justify-between text-[13px]'>
+      <div className='mt-[100px] px-2 sm:px-0 flex flex-wrap justify-between text-[13px]'>
         <p className='sm:ml-20'>INTERNATIONAL</p>
         <div className='flex gap-5 mr-5'>
           <p>ENGLISH |</p>
