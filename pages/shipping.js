@@ -6,26 +6,7 @@ import { shippingAddressValidate } from '@/lib/validate';
 import FooterMain from '@/components/FooterMain';
 import { useDispatch } from 'react-redux';
 import { saveShippingAddress } from '@/redux/reducer';
-// import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-
-// export async function getServerSideProps({ req }){
-//   const session = await getSession({ req });
-
-//   if(!session) {
-//     return {
-//       redirect: {
-//         destination: '/login',
-//         permanent: false,
-//       }
-//     }
-//   }
-
-  // authorize user return session
-//   return {
-//     props: { session }
-//   }
-// }
 
 export default function Shipping() {
   const router = useRouter();
@@ -48,7 +29,7 @@ export default function Shipping() {
       saveShippingAddress({ fullName, address, city, postalCode, country })
     );
 
-    router.push('/payment')
+    router.push('/payment');
   }
 
   return (
@@ -171,10 +152,7 @@ export default function Shipping() {
             />
           </div>
           <div>
-            <button
-              type="submit"
-              className="primary-button"
-            >
+            <button type="submit" className="primary-button">
               Next
             </button>
           </div>

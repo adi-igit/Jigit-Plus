@@ -2,8 +2,6 @@ import CheckoutWizard from '@/components/CheckoutWizard';
 import FooterMain from '@/components/FooterMain';
 import Navbar from '@/components/Navbar';
 import { cartClearItems } from '@/redux/reducer';
-import { getError } from '@/utils/error';
-import axios from 'axios';
 import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -12,7 +10,6 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -74,7 +71,7 @@ export default function PlaceOrder() {
       }),
     };
 
-    await fetch('http://localhost:3000/api/orders', options)
+    await fetch('https://jigit-shop.vercel.app/api/orders', options)
       .then((res) => res.json())
       .then((data) => {
         if (data) {
