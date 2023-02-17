@@ -6,7 +6,7 @@
 
 $font-stack: 'Roboto', sans-serif;
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -21,6 +21,26 @@ $font-stack: 'Roboto', sans-serif;
   color: #4b5563;
 }
 
+.input-payment input[type='radio'] {
+  display: none;
+}
+.input-payment input[type='radio']:checked + label {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #4b5563;
+}
+
 .primary-button {
-  @apply rounded bg-gray-700 py-2 px-4 shadow outline-none hover:bg-gray-800 active:bg-gray-900 text-[12px] text-white font-[550] tracking-widest;
+  @apply w-max px-6 py-2 my-2 border rounded-md flex justify-center gap-2 text-white bg-blue-900 hover:bg-gray-200 hover:border-blue-900 hover:text-black;
+}
+
+.default-button {
+  @apply w-max px-6 py-2 my-2 border rounded-md flex justify-center gap-2 text-white bg-gray-800 hover:bg-gray-200 hover:border-blue-900 hover:text-black;
+}
+
+.alert-error {
+  @apply my-3 rounded-lg bg-red-100 p-3 text-red-700;
+}
+
+.alert-success {
+  @apply my-3 rounded-lg bg-green-100 p-3 text-green-700
 }

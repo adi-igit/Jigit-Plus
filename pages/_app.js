@@ -5,34 +5,36 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { SessionProvider, useSession } from 'next-auth/react';
+import { SessionProvider } from 'next-auth/react';
 import { motion } from 'framer-motion';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 let persistor = persistStore(store);
 
-export default function App({ session, Component, pageProps, router }) {
-  
+export default function App({ Component, pageProps, router }) {
   return (
     <SessionProvider session={pageProps.session}>
       <ToastContainer position="bottom-center" limit={1} />
       <Provider store={store}>
-          <PersistGate persistor={persistor}>
-            <motion.div
-              key={router.route}
-              initial="pageInitial"
-              animate="pageAnimate"
-              variants={{
-                pageInitial: {
-                  opacity: 0,
-                },
-                pageAnimate: {
-                  opacity: 1,
-                },
-              }}
-            >
+        <PersistGate persistor={persistor}>
+          <motion.div
+            key={router.route}
+            initial="pageInitial"
+            animate="pageAnimate"
+            variants={{
+              pageInitial: {
+                opacity: 0,
+              },
+              pageAnimate: {
+                opacity: 1,
+              },
+            }}
+          >
+            <PayPalScriptProvider deferLoading={true}>
               <Component {...pageProps} />
-            </motion.div>
-          </PersistGate>
+            </PayPalScriptProvider>
+          </motion.div>
+        </PersistGate>
       </Provider>
     </SessionProvider>
   );

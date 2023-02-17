@@ -45,14 +45,16 @@ export default function Login() {
 
   //Google handler function
   const handleGoogleSignin = async () => {
-    signIn('google', { callbackUrl: `https://jigit-shop.vercel.app/${redirect || ''}` });
+    signIn('google', {
+      callbackUrl: `https://jigit-shop.vercel.app/${redirect || ''}`,
+    });
   };
 
   return (
     <>
       <Head>
         <title>Login - JIGIT</title>
-        <meta name="description" content="Home Page - JIGIT" />
+        <meta name="description" content="Login - JIGIT" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -101,7 +103,10 @@ export default function Login() {
             />
           </div>
           <div>
-            <button type="submit" className="w-full my-2 border rounded-md py-2 flex justify-center gap-2 text-white bg-black hover:bg-gray-200 hover:border-blue-900 hover:text-black">
+            <button
+              type="submit"
+              className="w-full my-2 border rounded-md py-2 flex justify-center gap-2 text-white bg-black hover:bg-gray-200 hover:border-blue-900 hover:text-black"
+            >
               Login
             </button>
           </div>

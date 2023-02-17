@@ -62,6 +62,8 @@ export default function ProductId({ product, relatedProducts }) {
 
   const state = useSelector((state) => state.app.cart.cartItems);
   const dispatch = useDispatch();
+
+  
   const addToCartHandler = () => {
     const existItem = state.find((x) => x._id === id);
     const quantity = existItem ? existItem.quantity + 1 : 1;

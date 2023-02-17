@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  cart: { cartItems: [] },
+  cart: { cartItems: [], shippingAddress: {}, paymentMethod: '' },
 };
 
 export const ReducerSlice = createSlice({
@@ -26,9 +26,39 @@ export const ReducerSlice = createSlice({
       );
       return { ...state, cart: { ...state.cart, cartItems } };
     },
+    saveShippingAddress: (state, action) => {
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          shippingAddress: {
+            ...state.cart.shippingAddress,
+            ...action.payload,
+          },
+        },
+      };
+    },
+    savePaymentMethod: (state, action) => {
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          paymentMethod: action.payload,
+        },
+      };
+    },
+    cartClearItems: (state, action) => {
+      return { ...state, cart: { ...state.cart, cartItems: [] } };
+    },
   },
 });
 
-export const { cartAddItem, cartRemoveItem } = ReducerSlice.actions;
+export const {
+  cartAddItem,
+  cartRemoveItem,
+  saveShippingAddress,
+  savePaymentMethod,
+  cartClearItems,
+} = ReducerSlice.actions;
 
 export default ReducerSlice.reducer;
