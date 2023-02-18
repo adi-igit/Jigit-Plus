@@ -68,7 +68,7 @@ export default function Navbar() {
             onClick={() => setDrop(true)}
           />
           <Link href="/">
-            <h1 className="text-[40px] sm:text-[50px] font-[600]">JIGIT</h1>
+            <h1 className="hidden sm:inline-block text-[40px] sm:text-[50px] font-[600]">JIGIT</h1>
           </Link>
         </div>
         <div className="flex justify-center items-center gap-[10px]">
@@ -80,7 +80,7 @@ export default function Navbar() {
           </Link>
           {session ? (
             <Menu as="div" className="relative inline-block">
-              <Menu.Button className="hidden sm:inline-block text-gray-600">
+              <Menu.Button className="text-gray-600">
                 <p className="p-2">
                   {session.user.username || session.user.email}
                 </p>
