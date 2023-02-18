@@ -5,6 +5,7 @@ import Pagination from '@/components/Pagination';
 import { paginate } from '@/lib/helper';
 import clientPromise from '@/utils/mongodb';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -67,10 +68,12 @@ export default function Products({ products }) {
               <div>
                 <Link href={`/product/${product._id}`}>
                   <div className="relative">
-                    <img
+                    <Image
                       className="w-[300px] h-[400px] object-cover"
                       key={product._id}
                       src={product.imageIntro}
+                      width={300}
+                      height={400}
                       alt=""
                     />
                     <button className="absolute bottom-5 left-[50%] text-1xl text-gray-300 border py-[2px] px-[10px] rounded-full bg-black/20">
