@@ -16,7 +16,7 @@ export async function getStaticProps() {
   const client = await clientPromise;
   const db = client.db('shop-db');
 
-  const products = await db.collection('products').find({}).sort({_id: -1}).limit(100).toArray();
+  const products = await db.collection('products').find({}).sort({_id: 1}).limit(100).toArray();
 
   if (!products) return console.error('Failed to fetch products!');
 
