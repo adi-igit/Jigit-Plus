@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 export default function Login() {
   const { data: session } = useSession();
@@ -41,6 +42,9 @@ export default function Login() {
     if (status.ok) {
       router.push(status.url);
     }
+    if (!status.ok) {
+      toast.error('Invalid email or password...')
+    }
   }
 
   //Google handler function
@@ -65,13 +69,7 @@ export default function Login() {
           className="mx-auto md:w-[50%] lg:w-[30%] border py-12 px-5"
         >
           <h1 className="mb-4 text-xl font-[600]">Login</h1>
-          <div
-            className={`${
-              formik.errors.email && formik.touched.email
-                ? 'border-rose-600 mb-4'
-                : ''
-            }`}
-          >
+          <div className="mb-4">
             <label htmlFor="email" className="text-sm text-gray-600">
               Email
             </label>
@@ -79,16 +77,12 @@ export default function Login() {
               type="email"
               id="email"
               name="email"
-              className="w-full border outline-none"
+              className={`${formik.errors.email && formik.touched.email ? 'border-red-500' : ''} w-full border outline-none p-1 rounded-md`}
               {...formik.getFieldProps('email')}
             />
           </div>
           <div
-            className={`${
-              formik.errors.password && formik.touched.password
-                ? 'border-rose-600 mb-4'
-                : ''
-            }`}
+            className='mb-4'
           >
             <label htmlFor="password" className="text-sm text-gray-600">
               Password
@@ -97,7 +91,7 @@ export default function Login() {
               type="password"
               id="password"
               name="password"
-              className="w-full border outline-none"
+              className={`${formik.errors.password && formik.touched.password ? 'border-red-500' : ''} w-full border outline-none p-1 rounded-md`}
               autoFocus
               {...formik.getFieldProps('password')}
             />

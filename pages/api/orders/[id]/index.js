@@ -2,22 +2,26 @@
 
 import clientPromise from '@/utils/mongodb';
 import { ObjectId } from 'mongodb';
-// import { getSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 
 const handler = async (req, res) => {
-  // const session = await getSession({ req });
-  // if (!session) {
-  //   return res.status(401).send('signin required');
-  // }
+  const session = await getSession({ req });
+  if (!session) {
+    return res.status(401).send('signin required');
+  }
 
-  const client = await clientPromise;
-  const db = client.db('shop-db');
+  if (req.method === 'GET') {
+    const client = await clientPromise;
+    const db = client.db('shop-db');
 
-  const id = new ObjectId(req.query.id);
+    const id = new ObjectId(req.query.id);
 
-  const order = await db.collection('orders').find({_id : id}).toArray();
+    const order = await db.collection('orders').find({ _id: id }).toArray();
 
-  res.status(200).send(order);
+    res.status(200).send(order);
+  } else {
+    res.status(500).send({ error: 'Failed to fetch order id...!' });
+  }
 };
 
 export default handler;

@@ -12,7 +12,7 @@ export default function ImageHandler({
   };
 
   return (
-    <div className="lg:w-[33%]">
+    <div className="lg:w-[30%]">
       <div className="flex flex-col lg:flex-row mt-20 transition-all">
         <img
           className="lg:h-[500px] cursor-pointer"

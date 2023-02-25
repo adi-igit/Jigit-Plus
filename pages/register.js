@@ -4,6 +4,10 @@ import Link from 'next/link';
 import { useFormik } from 'formik';
 import { registerValidate } from '@/lib/validate';
 import { useRouter } from 'next/router';
+import { sendEmailSignup, signUp } from '@/lib/helper';
+import { toast } from 'react-toastify';
+
+const BASE_URL = 'https://jigit-shop.vercel.app/';
 
 export default function Register() {
   const router = useRouter();
@@ -20,19 +24,13 @@ export default function Register() {
   });
 
   async function onSubmit(values) {
-    const options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values),
-    };
-
-    await fetch('https://jigit-shop.vercel.app/api/auth/signup', options)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data) {
-          router.push('https://jigit-shop.vercel.app/login');
-        }
-      });
+    try {
+      await signUp(values);
+      router.push(`${BASE_URL}/login`);
+      await sendEmailSignup(values);
+    } catch (error) {
+      toast.error('Bad request, please try again.');
+    }
   }
 
   return (
@@ -55,7 +53,11 @@ export default function Register() {
             <input
               type="text"
               name="Username"
-              className="w-full border outline-none"
+              className={`${
+                formik.errors.name && formik.touched.name
+                  ? 'border-red-500'
+                  : ''
+              } w-full border outline-none p-1 rounded-md`}
               id="name"
               {...formik.getFieldProps('username')}
             />
@@ -67,7 +69,11 @@ export default function Register() {
               type="email"
               name="email"
               {...formik.getFieldProps('email')}
-              className="w-full border outline-none"
+              className={`${
+                formik.errors.email && formik.touched.email
+                  ? 'border-red-500'
+                  : ''
+              } w-full border outline-none p-1 rounded-md`}
               id="email"
             ></input>
           </div>
@@ -76,7 +82,11 @@ export default function Register() {
             <input
               type="password"
               name="password"
-              className="w-full border outline-none"
+              className={`${
+                formik.errors.password && formik.touched.password
+                  ? 'border-red-500'
+                  : ''
+              } w-full border outline-none p-1 rounded-md`}
               id="password"
               {...formik.getFieldProps('password')}
             ></input>
@@ -84,7 +94,11 @@ export default function Register() {
           <div className="mb-4">
             <label htmlFor="confirmPassword">Confirm Password</label>
             <input
-              className="w-full border outline-none"
+              className={`${
+                formik.errors.cpassword && formik.touched.cpassword
+                  ? 'border-red-500'
+                  : ''
+              } w-full border outline-none p-1 rounded-md`}
               type="password"
               name="cpassword"
               id="confirmPassword"
@@ -93,11 +107,15 @@ export default function Register() {
           </div>
 
           <div className="mb-4 ">
-            <button className="w-full my-2 py-2 bg-black text-white rounded-md hover:scale-[1.01] duration-300">Register</button>
+            <button className="w-full my-2 py-2 bg-black text-white rounded-md hover:scale-[1.01] duration-300">
+              Register
+            </button>
           </div>
           <div className="mb-4 ">
-             Have an account? &nbsp;
-            <Link href={'/login'} className='underline font-bold'>Sign In</Link>
+            Have an account? &nbsp;
+            <Link href={'/login'} className="underline font-bold">
+              Sign In
+            </Link>
           </div>
         </form>
       </div>

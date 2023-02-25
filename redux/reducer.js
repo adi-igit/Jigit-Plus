@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   cart: { cartItems: [], shippingAddress: {}, paymentMethod: '' },
+  //State For Admin Dashboard
+  products: [],
 };
 
 export const ReducerSlice = createSlice({
@@ -50,6 +52,19 @@ export const ReducerSlice = createSlice({
     cartClearItems: (state, action) => {
       return { ...state, cart: { ...state.cart, cartItems: [] } };
     },
+    //Admin Actions
+    getProducts: (state, action) => {
+      return {
+        products: action.payload,
+      };
+    },
+    deleteProduct: (state, action) => {
+      return {
+        products: state.products.filter(
+          (product) => product._id !== action.payload
+        ),
+      };
+    },
   },
 });
 
@@ -59,6 +74,8 @@ export const {
   saveShippingAddress,
   savePaymentMethod,
   cartClearItems,
+  getProducts,
+  deleteProduct,
 } = ReducerSlice.actions;
 
 export default ReducerSlice.reducer;

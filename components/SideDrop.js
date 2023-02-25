@@ -25,6 +25,8 @@ export default function SideDrop({ drop, setDrop }) {
     fetcher
   );
 
+    console.log(man)
+
   // if you want you can display error directly in ui
   // if (errorMan) return <div>Failed to load</div>;
   // if (errorWoman) return <div>Failed to load</div>;
@@ -82,7 +84,7 @@ export default function SideDrop({ drop, setDrop }) {
           {category === 1 && (
             <>
               <ul className="p-[30px] sm:p-[20px]">
-                {man.map((product, i) => (
+                {man?.map((product, i) => (
                   <Link href={`/man/${product.category}`} key={i}>
                     <li
                       className="text-[13px] my-[5px]"

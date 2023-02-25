@@ -14,13 +14,6 @@ export default function Navbar() {
   const { data: session } = useSession();
   const [drop, setDrop] = useState(false);
 
-  const links = [
-    { href: '/account-settings', label: 'Account settings' },
-    { href: '/support', label: 'Support' },
-    { href: '/license', label: 'License' },
-    { href: '/sign-out', label: 'Sign out' },
-  ];
-
   function handleSignOut() {
     signOut();
   }
@@ -28,8 +21,10 @@ export default function Navbar() {
   const state = useSelector((state) => state.app.cart);
   const [cartItemsCount, setCartItemsCount] = useState(0);
   useEffect(() => {
-    setCartItemsCount(state.cartItems.reduce((a, c) => a + c.quantity, 0));
-  }, [state.cartItems]);
+    setCartItemsCount(
+      state?.cartItems.reduce((a, c) => a + c.quantity, 0) || state
+    );
+  }, [state?.cartItems]);
 
   const { scrollY } = useScroll();
 
@@ -68,19 +63,21 @@ export default function Navbar() {
             onClick={() => setDrop(true)}
           />
           <Link href="/">
-            <h1 className="hidden sm:inline-block text-[40px] sm:text-[50px] font-[600]">JIGIT</h1>
+            <h1 className="hidden sm:inline-block text-[40px] sm:text-[50px] font-[600]">
+              JIGIT
+            </h1>
           </Link>
         </div>
         <div className="flex justify-center items-center gap-[10px]">
           <Link
             href="/search"
-            className="hidden sm:inline-block pr-3 text-gray-600 text-[14px] border-b border-b-black"
+            className="text-black hidden sm:inline-block pr-3 text-gray-600 text-[14px] border-b border-b-black"
           >
             SEARCH
           </Link>
           {session ? (
             <Menu as="div" className="relative inline-block">
-              <Menu.Button className="text-gray-600">
+              <Menu.Button>
                 <p className="p-2">
                   {session.user.username || session.user.email}
                 </p>
@@ -96,6 +93,13 @@ export default function Navbar() {
                     Order History
                   </Link>
                 </Menu.Item>
+                {session.user.email === 'jigitreply@gmail.com' && (
+                  <Menu.Item className="p-2 sm:p-3 hover:bg-black/20">
+                    <Link className="dropdown-link" href="/admin">
+                      Admin Dashboard
+                    </Link>
+                  </Menu.Item>
+                )}
                 <Menu.Item className="p-2 sm:p-3 hover:bg-black/20">
                   <Link
                     className="dropdown-link"

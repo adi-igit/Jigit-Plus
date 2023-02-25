@@ -9,7 +9,6 @@ const handler = async (req, res) => {
       const gender = await db
         .collection('products')
         .find({ gender: 'kids-boy' })
-        .limit(15)
         .toArray();
 
       res.json(gender);

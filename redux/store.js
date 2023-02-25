@@ -1,35 +1,24 @@
-import { configureStore } from '@reduxjs/toolkit';
-import Reducer from './reducer';
-import { persistReducer } from 'redux-persist';
-import { combineReducers } from '@reduxjs/toolkit';
-import {
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
+import { configureStore } from "@reduxjs/toolkit";
 import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+import thunk from 'redux-thunk';
+import reducer from "./reducer";
+import reducerAdmin from "./reducerAdmin";
 
 const persistConfig = {
   key: 'root',
-  version: 1,
   storage,
-};
+}
 
-const reducer = combineReducers({
-  app: Reducer,
-});
-
-const persistedReducer = persistReducer(persistConfig, reducer);
+const persistedReducer = persistReducer(persistConfig, reducer)
 
 export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-});
+  reducer: {
+    app: persistedReducer,
+    app2: reducerAdmin,
+  },
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: [thunk]
+})
+
+export const persistor = persistStore(store)

@@ -12,7 +12,10 @@ export async function getStaticPaths() {
   const client = await clientPromise;
   const db = client.db('shop-db');
 
-  const products = await db.collection('products').find({}).toArray();
+  const products = await db
+    .collection('products')
+    .find({})
+    .toArray();
 
   if (!products) return console.error('Failed to fetch products!');
 
@@ -31,6 +34,7 @@ export async function getStaticProps({ params }) {
   const products = await db
     .collection('products')
     .find({ category: `${params.category}`, gender: 'kids-girl' })
+    .sort({ _id: -1 })
     .toArray();
 
   if (!products) return console.error('Failed to fetch products!');
@@ -50,6 +54,16 @@ export default function Products({ products }) {
 
   const onPageChange = (page) => {
     setCurrentPage(page);
+    // Top: 0 takes us all the way back to the top of the page
+    // Behavior: smooth keeps it smooth!
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    };
+
+    scrollToTop();
   };
 
   const paginatedPosts = paginate(products, currentPage, pageSize);
