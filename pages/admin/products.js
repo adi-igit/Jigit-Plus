@@ -28,7 +28,7 @@ export async function getServerSideProps({ req }) {
 }
 
 export default function ProductList() {
-  const state = useSelector((state) => state.app.products);
+  const state = useSelector((state) => state.app2.products);
   const dispatch = useDispatch();
 
   useEffect(() => {
