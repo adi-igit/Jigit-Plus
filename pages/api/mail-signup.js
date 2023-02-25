@@ -2,12 +2,14 @@
 import nodemailer from 'nodemailer';
 import Mailgen from 'mailgen';
 
+const BASE_URL = 'https://jigit-shop.vercel.app';
+
 const handler = async (req, res) => {
   if (req.method === 'POST') {
     const email = process.env.EMAIL;
     const pass = process.env.EMAIL_PASS;
 
-    const { email:emailUser, name } = req.body;
+    const { email: emailUser, name } = req.body;
 
     // send gmail message
     let config = {
@@ -37,12 +39,12 @@ const handler = async (req, res) => {
           button: {
             color: '#22BC66', // Optional action button color
             text: 'Click here',
-            link: 'https://jigit-shop.vercel.app/products',
+            link: `${BASE_URL}/products`,
           },
         },
         outro:
           "Need help, or have questions? Just reply to this email, we'd love to help.",
-        signature: 'Sincerely'
+        signature: 'Sincerely',
       },
     };
 
@@ -55,14 +57,13 @@ const handler = async (req, res) => {
       html: mail,
     };
 
-
     transporter
       .sendMail(message)
       .then(() => {
         return res.status(201).send({ msg: 'you should receive an email' });
       })
       .catch((error) => {
-        return res.status(500).send({ error : `Erorr ${error}` });
+        return res.status(500).send({ error: `Erorr ${error}` });
       });
   }
 };

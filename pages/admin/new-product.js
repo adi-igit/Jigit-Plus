@@ -3,7 +3,7 @@ import axios from 'axios';
 import { getSession } from 'next-auth/react';
 import { useState } from 'react';
 
-const BASE_URL = 'https://jigit-shop.vercel.app/';
+const BASE_URL = 'https://jigit-shop.vercel.app';
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });

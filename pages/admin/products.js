@@ -3,10 +3,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import { AiOutlineDelete } from 'react-icons/ai';
 import Layout from '@/components/admin/Layout';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { deleteProductById } from '@/lib/helper';
-import { getProducts } from '@/redux/reducer';
+import { useEffect, useState } from 'react';
+import { deleteItem } from '@/lib/helper';
 import { getSession } from 'next-auth/react';
 
 export async function getServerSideProps({ req }) {
@@ -28,24 +26,23 @@ export async function getServerSideProps({ req }) {
 }
 
 export default function ProductList() {
-  const state = useSelector((state) => state.app2.products);
-  const dispatch = useDispatch();
+  const [state, setState] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const res = await fetch('/api/admin/get-products');
         const data = await res.json();
-        dispatch(getProducts(data));
+        setState(data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchProducts();
-  }, [dispatch]);
+  }, [setState, state]);
 
-  const handleDelete = (id, dispatch) => {
-    deleteProductById(id, dispatch);
+  const handleDelete = async (id) => {
+    await deleteItem(id);
   };
 
   const columns = [
@@ -93,11 +90,13 @@ export default function ProductList() {
                 Edit
               </button>
             </Link>
-            <AiOutlineDelete
-              size={25}
-              className="productListDelete text-red-500 cursor-pointer"
-              onClick={() => handleDelete(params.row._id, dispatch)}
-            />
+
+            <button onClick={() => handleDelete(params.row._id)}>
+              <AiOutlineDelete
+                size={25}
+                className="productListDelete text-red-500 cursor-pointer"
+              />
+            </button>
           </>
         );
       },

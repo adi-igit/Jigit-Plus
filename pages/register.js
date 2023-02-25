@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { sendEmailSignup, signUp } from '@/lib/helper';
 import { toast } from 'react-toastify';
 
-const BASE_URL = 'https://jigit-shop.vercel.app/';
+const BASE_URL = 'https://jigit-shop.vercel.app';
 
 export default function Register() {
   const router = useRouter();

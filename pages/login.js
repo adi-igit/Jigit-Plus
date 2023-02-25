@@ -9,6 +9,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 
+const BASE_URL = 'https://jigit-shop.vercel.app';
+
 export default function Login() {
   const { data: session } = useSession();
 
@@ -50,7 +52,7 @@ export default function Login() {
   //Google handler function
   const handleGoogleSignin = async () => {
     signIn('google', {
-      callbackUrl: `https://jigit-shop.vercel.app/${redirect || ''}`,
+      callbackUrl: `${BASE_URL}/${redirect || ''}`,
     });
   };
 

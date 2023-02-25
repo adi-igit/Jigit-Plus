@@ -11,6 +11,8 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 
+const BASE_URL = 'https://jigit-shop.vercel.app';
+
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
 
@@ -71,7 +73,7 @@ export default function PlaceOrder() {
       }),
     };
 
-    await fetch('https://jigit-shop.vercel.app/api/orders', options)
+    await fetch(`${BASE_URL}/api/orders`, options)
       .then((res) => res.json())
       .then((data) => {
         if (data) {
