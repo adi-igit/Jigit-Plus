@@ -18,13 +18,13 @@ export default function Navbar() {
     signOut();
   }
 
-  const state = useSelector((state) => state.app.cart);
+  const state = useSelector((state) => state?.app?.cart);
   const [cartItemsCount, setCartItemsCount] = useState(0);
   useEffect(() => {
     setCartItemsCount(
-      state.cartItems.reduce((a, c) => a + c.quantity, 0) || state
+      state?.cartItems?.reduce((a, c) => a + c.quantity, 0)
     );
-  }, [state]);
+  }, [state?.cartItems]);
 
   const { scrollY } = useScroll();
 
