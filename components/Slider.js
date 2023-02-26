@@ -5,7 +5,6 @@ import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 import styles from 'styles/Slider.module.scss';
 import FooterSlider from './FooterSlider';
 import SliderImg from './SliderImg';
-import SliderVideo from './SliderVideo';
 
 export default function Slider({ myRef }) {
   const [index, setIndex] = useState(0);
@@ -55,10 +54,10 @@ export default function Slider({ myRef }) {
           className={styles.sliderVideoWrapper}
           style={{ transform: `translateX(${-100 * index}vw)` }}
         >
-          <SliderVideo
-            vid1="/assets/vidman1.mp4"
-            vid2="/assets/vidwoman1.mp4"
-            vid3="/assets/vidkids1.mp4"
+          <SliderImg
+            img1="https://static.zara.net/photos///contents/mkt/spots/ss23-north-man-new/subhome-xmedia-08-2//w/1366/IMAGE-landscape-fill-24f2378d-dd57-49df-8962-1730b956e6e3-default_0.jpg?ts=1677239531402"
+            img2="https://static.zara.net/photos///contents/mkt/spots/ss23-north-woman-new/subhome-xmedia-08-02//w/1366/IMAGE-landscape-fill-bd3969ab-feb0-4bed-a934-284acecd7ae2-default_0.jpg?ts=1677085833287"
+            img3="https://static.zara.net/photos///contents/mkt/spots/ss23-north-kids-girl/subhome-xmedia-08//w/1366/IMAGE-landscape-default-fill-382bc093-832e-4273-8b5c-65394d59f4ec-default_0.jpg?ts=1677085916132"
           />
         </div>
       </Link>
@@ -79,10 +78,10 @@ export default function Slider({ myRef }) {
           className={styles.sliderVideoWrapper}
           style={{ transform: `translateX(${-100 * index}vw)` }}
         >
-          <SliderVideo
-            vid1="/assets/vidman2.mp4"
-            vid2="/assets/vidwoman2.mp4"
-            vid3="/assets/vidkids2.mp4"
+          <SliderImg
+            img1="https://static.zara.net/photos///contents/mkt/spots/ss23-north-man-shoes/subhome-xmedia-08//w/1366/IMAGE-landscape-fill-79c1f378-6cf9-4158-8c27-ed9f9e3f3fc3-default_0.jpg?ts=1677244882231"
+            img2="https://static.zara.net/photos///contents/mkt/spots/ss23-north-woman-collection/subhome-xmedia-08-03//w/1366/IMAGE-landscape-fill-7100a82e-d9b8-48b7-88e1-18fd1804da2d-default_0.jpg?ts=1677086490964"
+            img3="https://static.zara.net/photos///contents/mkt/spots/ss23-north-kids-boy/subhome-xmedia-08//w/1366/IMAGE-landscape-default-fill-f38d239e-89e3-4244-8489-24677b580277-default_0.jpg?ts=1677085551688"
           />
         </div>
       </Link>
