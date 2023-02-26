@@ -51,7 +51,7 @@ export default function Navbar() {
     // motion.nav for hide and show nav
     <>
       <motion.nav
-        className="flex justify-between items-center px-[15px] sm:px-[20px] h-[10vh] sm:h-[15vh] bg-transparent fixed w-full z-[998] text-black"
+        className="flex justify-between items-center px-[15px] sm:px-[20px] h-[10vh] bg-transparent fixed w-full z-[998] text-black"
         variants={variants}
         animate={hidden ? 'hidden' : 'visible'}
         transition={{ ease: [0.1, 0.25, 0.3, 1], duration: 0.6 }}

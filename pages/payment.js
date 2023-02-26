@@ -84,22 +84,6 @@ export default function Payment() {
                 <span className="text-[#0E79BF]">pal</span>
               </label>
             </div>
-            <div className="input-payment relative border w-[150px] h-[150px] duration-500 hover:scale-[1.02] hover:border-b-[2px] hover:border-b-black">
-              <input
-                name="paymentMethod"
-                className="p-2 outline-none focus:ring-0"
-                id="stripe"
-                type="radio"
-                checked={selectedPaymentMethod === 'stripe'}
-                onChange={() => setSelectedPaymentMethod('stripe')}
-              />
-              <label
-                className="absolute top-0 bottom-0 left-0 right-0 text-xl font-bold pl-11 pt-[55px] cursor-pointer"
-                htmlFor="stripe"
-              >
-                <span className="text-[#626CD9]">Stripe</span>
-              </label>
-            </div>
           </div>
           <div className="mb-4 mt-32 flex justify-between">
             <button
