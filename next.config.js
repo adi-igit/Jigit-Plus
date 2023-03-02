@@ -7,10 +7,13 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'static.zara.net',
         port: '',
-        pathname:
-          '/photos///**',
+        pathname: '/photos///**',
       },
     ],
+  },
+  i18n: {
+    locales: ['en', 'ru'],
+    defaultLocale: 'en',
   },
 };
 

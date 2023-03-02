@@ -8,6 +8,9 @@ import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { motion, useScroll } from 'framer-motion';
 import { Menu } from '@headlessui/react';
+import { useRouter } from 'next/router';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
 
 export default function Navbar() {
   const [hidden, setHidden] = useState(false);
@@ -21,9 +24,7 @@ export default function Navbar() {
   const state = useSelector((state) => state?.app?.cart);
   const [cartItemsCount, setCartItemsCount] = useState(0);
   useEffect(() => {
-    setCartItemsCount(
-      state?.cartItems?.reduce((a, c) => a + c.quantity, 0)
-    );
+    setCartItemsCount(state?.cartItems?.reduce((a, c) => a + c.quantity, 0));
   }, [state?.cartItems]);
 
   const { scrollY } = useScroll();
@@ -46,6 +47,15 @@ export default function Navbar() {
   useEffect(() => {
     return scrollY.onChange(() => update());
   }, [scrollY, update]);
+
+  const router = useRouter();
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
+
+  const changeLanguage = (e) => {
+    const locale = e.target.value;
+    router.push('/', '/', { locale });
+  };
 
   return (
     // motion.nav for hide and show nav
@@ -71,9 +81,9 @@ export default function Navbar() {
         <div className="flex justify-center items-center gap-[10px]">
           <Link
             href="/search"
-            className="text-black hidden sm:inline-block pr-3 text-gray-600 text-[14px] border-b border-b-black"
+            className="hidden sm:inline-block pr-3 text-[14px] border-b border-b-black"
           >
-            SEARCH
+            {t.search}
           </Link>
           {session ? (
             <Menu as="div" className="relative inline-block">
@@ -85,18 +95,18 @@ export default function Navbar() {
               <Menu.Items className="flex flex-col absolute right-[-20px] sm:right-0 w-36 sm:w-56 origin-top-right bg-white shadow-lg">
                 <Menu.Item className="p-2 sm:p-3 hover:bg-black/20">
                   <Link className="dropdown-link" href="/profile">
-                    Profile
+                    {t.profile}
                   </Link>
                 </Menu.Item>
                 <Menu.Item className="p-2 sm:p-3 hover:bg-black/20">
                   <Link className="dropdown-link" href="/order-history">
-                    Order History
+                    {t.orderHistory}
                   </Link>
                 </Menu.Item>
                 {session.user.email === 'jigitreply@gmail.com' && (
                   <Menu.Item className="p-2 sm:p-3 hover:bg-black/20">
                     <Link className="dropdown-link" href="/admin">
-                      Admin Dashboard
+                      {t.adminDashboard}
                     </Link>
                   </Menu.Item>
                 )}
@@ -106,7 +116,7 @@ export default function Navbar() {
                     href="#"
                     onClick={handleSignOut}
                   >
-                    Sign Out
+                    {t.signOut}
                   </Link>
                 </Menu.Item>
               </Menu.Items>
@@ -116,9 +126,13 @@ export default function Navbar() {
               href="/login"
               className="p-2 text-[14px] text-gray-600 font-[600]"
             >
-              LOGIN
+              {t.login}
             </Link>
           )}
+          <select onChange={changeLanguage} defaultValue={locale} className='bg-transparent cursor-pointer'>
+            <option value="en" className='bg-black/10 cursor-pointer'>EN</option>
+            <option value="ru" className='bg-black/10 cursor-pointer'>RU</option>
+          </select>
           <Link href="/cart" passHref className="relative">
             {cartItemsCount > 0 && (
               <span className="absolute top-[-10px] right-[-10px] text-xs text-white px-2 py-1 bg-blue-900 rounded-full">

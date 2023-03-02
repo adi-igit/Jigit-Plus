@@ -11,6 +11,9 @@ import { SiMinutemailer } from 'react-icons/si';
 import { useFormik } from 'formik';
 import { contactForm } from '@/lib/validate';
 import { toast } from 'react-toastify';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
+import { useRouter } from 'next/router';
 
 export async function getStaticProps() {
   const client = await clientPromise;
@@ -29,6 +32,9 @@ export async function getStaticProps() {
 }
 
 export default function Products({ products }) {
+  const router = useRouter();
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
   const [currentPage, setCurrentPage] = useState(1);
   const [show, setShow] = useState(false);
   const [error, setError] = useState(null);
@@ -48,7 +54,7 @@ export default function Products({ products }) {
     try{
       await sendContactForm(values);  
       setShow(false);
-      toast.success('Message sent.')
+      toast.success(`${t.contactFormToastSuccess}`)
     }catch(error){
       setError(error.message);
     }
@@ -75,7 +81,7 @@ export default function Products({ products }) {
   return (
     <>
       <Head>
-        <title>Products - JIGIT</title>
+        <title>{t.headProducts} - JIGIT</title>
         <meta name="description" content="Products - JIGIT" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -85,17 +91,7 @@ export default function Products({ products }) {
         <div className="pt-[100px]">
           <h1 className="text-center text-[50px]">JIGIT+</h1>
           <p className="text-[14px] text-center p-[10px]">
-            JIGIT has an ongoing commitment to its customers around the world in
-            providing an excellent customer experience to all. As part of these
-            efforts, we are committed to providing a website that is accessible
-            to the widest possible audience, regardless of technology or
-            ability. JIGIT is committed to aligning its website and its
-            operations in substantial conformance with generally-recognized and
-            accepted guidelines and/or standards for website accessibility (as
-            these may change from time to time). To assist in these efforts,
-            JIGIT has partnered with experienced internationally reputable
-            consultants and is working to increase the accessibility and
-            usability of our website.
+            {t.about}
           </p>
         </div>
         <div className="min-h-[100vh] p-[30px] flex gap-[30px] justify-center items-center flex-wrap">
@@ -132,6 +128,7 @@ export default function Products({ products }) {
           pageSize={pageSize} // 10
           onPageChange={onPageChange}
         />
+        {/* FORM CONTACT */}
         <div className="relative">
           {show && (
             <div className="flex sm:w-[300px] rounded-md fixed right-5 bottom-[75px] bg-gray-300">
@@ -139,12 +136,12 @@ export default function Products({ products }) {
                 onSubmit={formik.handleSubmit}
                 className="submit-btn w-full flex flex-col m-3"
               >
-                <h1 className="text-center text-2xl px-2">Contact</h1>
+                <h1 className="text-center text-2xl px-2">{t.contactForm}</h1>
                 {error && (
                   <p className='text-center text-red-500 text-sm'>{error}</p>
                 )}
                 <div className="flex flex-col px-2 mb-1">
-                  <label className="text-sm">Name</label>
+                  <label className="text-sm">{t.name}</label>
                   <input
                     type="text"
                     name="name"
@@ -160,7 +157,7 @@ export default function Products({ products }) {
                   )}
                 </div>
                 <div className="flex flex-col px-2 mb-1">
-                  <label className="text-sm">Email</label>
+                  <label className="text-sm">{t.email}</label>
                   <input
                     type="email"
                     name="email"
@@ -176,7 +173,7 @@ export default function Products({ products }) {
                   )}
                 </div>
                 <div className="flex flex-col px-2 mb-1">
-                  <label className="text-sm">Subject</label>
+                  <label className="text-sm">{t.subject}</label>
                   <input
                     type="text"
                     name="subject"
@@ -192,7 +189,7 @@ export default function Products({ products }) {
                   )}
                 </div>
                 <div className="flex flex-col px-2 mb-1">
-                  <label className="text-sm">Message</label>
+                  <label className="text-sm">{t.message}</label>
                   <textarea
                     type="text"
                     name="message"
@@ -211,7 +208,7 @@ export default function Products({ products }) {
                   type="submit"
                   className="bg-blue-900 rounded-sm text-white p-2 m-2 cursor-pointer"
                 >
-                  Submit
+                  {t.submit}
                 </button>
               </form>
             </div>

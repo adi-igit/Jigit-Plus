@@ -6,11 +6,15 @@ import { registerValidate } from '@/lib/validate';
 import { useRouter } from 'next/router';
 import { sendEmailSignup, signUp } from '@/lib/helper';
 import { toast } from 'react-toastify';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
 
 const BASE_URL = 'https://jigit-shop.vercel.app';
 
 export default function Register() {
   const router = useRouter();
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
 
   const formik = useFormik({
     initialValues: {
@@ -29,15 +33,16 @@ export default function Register() {
       router.push(`${BASE_URL}/login`);
       await sendEmailSignup(values);
     } catch (error) {
-      toast.error('Bad request, please try again.');
+      toast.error(`${t.registerToastError}`);
     }
-  }
+  };
+
 
   return (
     <>
       <Head>
-        <title>Register - JIGIT</title>
-        <meta name="description" content="Register - JIGIT" />
+        <title>{t.headRegister} - JIGIT</title>
+        <meta name="description" content={`${t.headRegister} - JIGIT`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -47,14 +52,14 @@ export default function Register() {
           className="mx-auto md:w-[50%] lg:w-[30%] border py-12 px-5 text-[14px]"
           onSubmit={formik.handleSubmit}
         >
-          <h1 className="mb-4 text-xl font-bold">Sign Up</h1>
+          <h1 className="mb-4 text-xl font-bold">{t.registerText}</h1>
           <div className="mb-4">
-            <label htmlFor="name">Username</label>
+            <label htmlFor="name">{t.registerUsername}</label>
             <input
               type="text"
               name="Username"
               className={`${
-                formik.errors.name && formik.touched.name
+                formik.errors.username && formik.touched.username
                   ? 'border-red-500'
                   : ''
               } w-full border outline-none p-1 rounded-md`}
@@ -64,7 +69,7 @@ export default function Register() {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">{t.registerEmail}</label>
             <input
               type="email"
               name="email"
@@ -78,7 +83,7 @@ export default function Register() {
             ></input>
           </div>
           <div className="mb-4">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">{t.registerPassword}</label>
             <input
               type="password"
               name="password"
@@ -92,7 +97,7 @@ export default function Register() {
             ></input>
           </div>
           <div className="mb-4">
-            <label htmlFor="confirmPassword">Confirm Password</label>
+            <label htmlFor="confirmPassword">{t.registerConfirmPassword}</label>
             <input
               className={`${
                 formik.errors.cpassword && formik.touched.cpassword
@@ -108,13 +113,13 @@ export default function Register() {
 
           <div className="mb-4 ">
             <button className="w-full my-2 py-2 bg-black text-white rounded-md hover:scale-[1.01] duration-300">
-              Register
+              {t.registerButton}
             </button>
           </div>
           <div className="mb-4 ">
-            Have an account? &nbsp;
+            {t.registerButton} &nbsp;
             <Link href={'/login'} className="underline font-bold">
-              Sign In
+              {t.registerButtonSignIn}
             </Link>
           </div>
         </form>

@@ -15,8 +15,10 @@ import { useFormik } from 'formik';
 import { contactForm } from '@/lib/validate';
 import { sendContactForm } from '@/lib/helper';
 import { toast } from 'react-toastify';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales }) {
   const client = await clientPromise;
   const db = client.db('shop-db');
 
@@ -24,10 +26,18 @@ export async function getStaticPaths() {
 
   if (!products) return console.error('Failed to fetch products!');
 
+  const product = products.map((p) => p._id);
+  const paths = product
+    .map((id) =>
+      locales.map((locale) => ({
+        params: { id: id.toString() },
+        locale,
+      }))
+    )
+    .flat();
+
   return {
-    paths: products.map((product) => ({
-      params: { id: product._id.toString() },
-    })),
+    paths,
     fallback: false,
   };
 }
@@ -66,6 +76,8 @@ export default function ProductId({ product, relatedProducts }) {
   const [color, setColor] = useState(null);
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(null);
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
 
   const formik = useFormik({
     initialValues: {
@@ -82,7 +94,7 @@ export default function ProductId({ product, relatedProducts }) {
     try {
       await sendContactForm(values);
       setVisible(false);
-      toast.success('Message sent.')
+      toast.success(`${t.productToastSuccess}`);
     } catch (error) {
       setError(error.message);
     }
@@ -96,17 +108,19 @@ export default function ProductId({ product, relatedProducts }) {
     const quantity = existItem ? existItem.quantity + 1 : 1;
 
     if (product.countInStock < quantity) {
-      alert('Sorry. Product is out of stock');
+      alert(`${t.productIsOutOfStock}`);
       return;
     }
 
     if (!size) {
-      alert('Please select size');
+      alert(`${t.productSelectSize}`);
     } else {
       dispatch(cartAddItem({ ...product, quantity, color, size }));
       router.push('/cart');
     }
   };
+
+  
 
   return (
     <>
@@ -118,11 +132,11 @@ export default function ProductId({ product, relatedProducts }) {
       </Head>
       <Navbar />
       <div className="w-full h-full px-[5px] pt-[70px] md:pt-[100px] lg:pt-[20px]">
-        <Link href="/products" passHref>
-          <h3 className="pt-[80px] m-2 w-max mt-5 sm:mt-0 mx-5 text-sm underline cursor-pointer text-gray-600">
-            Back to Shop
-          </h3>
-        </Link>
+        <h3 className="pt-[80px] m-2 w-max mt-5 sm:mt-0 mx-5 text-sm underline cursor-pointer text-gray-600">
+          <Link href="/products" passHref>
+            {t.backToShop}
+          </Link>
+        </h3>
         <div className="flex flex-col lg:flex-row justify-between items-center">
           <div className="lg:w-[30%] ">
             <div className="pr-4 h-[300px] mx-5 text-[12px] overflow-x-hidden overflow-scroll scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-[#000]/80">
@@ -253,16 +267,20 @@ export default function ProductId({ product, relatedProducts }) {
                   </div>
                 ))}
               </div>
-              <p className="text-gray-600 text-[12px] mt-2">SIZE GUIDES</p>
+              <p className="text-gray-600 text-[12px] mt-2">{t.sizeGuides}</p>
               <div className="mt-2 flex justify-between text-[12px] text-gray-600">
-                <p>Status</p>
-                <p>{product.countInStock > 0 ? 'In stock' : 'Unavailable'}</p>
+                <p>{t.status}</p>
+                <p>
+                  {product.countInStock > 0
+                    ? `${t.inStock}`
+                    : `${t.unavailable}`}
+                </p>
               </div>
               <button
                 onClick={addToCartHandler}
                 className="w-full mt-5 py-[7px] text-[12px] font-[600] bg-black text-white tracking-widest cursor-pointer hover:scale-[1.02] duration-300"
               >
-                ADD TO BAG
+                {t.addToBag}
               </button>
             </div>
           </div>
@@ -270,7 +288,7 @@ export default function ProductId({ product, relatedProducts }) {
       </div>
 
       <div className="px-20 pb-32">
-        <h1 className="text-lg font-[500] mt-40 mb-10">RELATED PRODUCTS</h1>
+        <h1 className="text-lg font-[500] mt-40 mb-10">{t.relatedProducts}</h1>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {relatedProducts?.map((product) => (
             <ProductItem key={product.slug} product={product} />
@@ -284,12 +302,12 @@ export default function ProductId({ product, relatedProducts }) {
               onSubmit={formik.handleSubmit}
               className="submit-btn w-full flex flex-col m-3"
             >
-              <h1 className="text-center text-2xl px-2">Contact</h1>
+              <h1 className="text-center text-2xl px-2">{t.contactForm}</h1>
               {error && (
                 <p className="text-center text-red-500 text-sm">{error}</p>
               )}
               <div className="flex flex-col px-2 mb-1">
-                <label className="text-sm">Name</label>
+                <label className="text-sm">{t.name}</label>
                 <input
                   type="text"
                   name="name"
@@ -305,7 +323,7 @@ export default function ProductId({ product, relatedProducts }) {
                 )}
               </div>
               <div className="flex flex-col px-2 mb-1">
-                <label className="text-sm">Email</label>
+                <label className="text-sm">{t.email}</label>
                 <input
                   type="email"
                   name="email"
@@ -321,7 +339,7 @@ export default function ProductId({ product, relatedProducts }) {
                 )}
               </div>
               <div className="flex flex-col px-2 mb-1">
-                <label className="text-sm">Subject</label>
+                <label className="text-sm">{t.subject}</label>
                 <input
                   type="text"
                   name="subject"
@@ -337,7 +355,7 @@ export default function ProductId({ product, relatedProducts }) {
                 )}
               </div>
               <div className="flex flex-col px-2 mb-1">
-                <label className="text-sm">Message</label>
+                <label className="text-sm">{t.message}</label>
                 <textarea
                   type="text"
                   name="message"
@@ -356,7 +374,7 @@ export default function ProductId({ product, relatedProducts }) {
                 type="submit"
                 className="bg-blue-900 rounded-sm text-white p-2 m-2 cursor-pointer"
               >
-                Submit
+                {t.submit}
               </button>
             </form>
           </div>

@@ -8,10 +8,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { SessionProvider } from 'next-auth/react';
 import { motion } from 'framer-motion';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { appWithTranslation } from 'next-i18next'
+
 
 let persistor = persistStore(store);
 
-export default function App({ Component, pageProps, router }) {
+function App({ Component, pageProps, router }) {
   return (
       <SessionProvider session={pageProps.session}>
         <ToastContainer position="bottom-center" limit={1} />
@@ -39,3 +41,5 @@ export default function App({ Component, pageProps, router }) {
       </SessionProvider>
   );
 }
+
+export default appWithTranslation(App);

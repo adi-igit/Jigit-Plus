@@ -1,6 +1,8 @@
 import CheckoutWizard from '@/components/CheckoutWizard';
 import FooterMain from '@/components/FooterMain';
 import Navbar from '@/components/Navbar';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
 import { savePaymentMethod } from '@/redux/reducer';
 import { getSession } from 'next-auth/react';
 import Head from 'next/head';
@@ -9,22 +11,22 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-export async function getServerSideProps({ req }){
+export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
 
-  if(!session) {
+  if (!session) {
     return {
       redirect: {
         destination: '/login',
         permanent: false,
-      }
-    }
+      },
+    };
   }
 
   // authorize user return session
   return {
-    props: { session }
-  }
+    props: { session },
+  };
 }
 
 export default function Payment() {
@@ -32,29 +34,33 @@ export default function Payment() {
   const { shippingAddress, paymentMethod } = state;
   const dispatch = useDispatch();
   const router = useRouter();
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
-  
-  function submitHandler(e){
+
+  function submitHandler(e) {
     e.preventDefault();
-    if(!selectedPaymentMethod){
-      return toast.error('Payment method is required')
+    if (!selectedPaymentMethod) {
+      return toast.error(`${t.paymentToastError}`);
     }
     dispatch(savePaymentMethod(selectedPaymentMethod));
-    router.push('/placeorder')
-  };
+    router.push('/placeorder');
+  }
 
   useEffect(() => {
-    if(!shippingAddress.address){
-      return router.push('/shipping')
+    if (!shippingAddress.address) {
+      return router.push('/shipping');
     }
-    setSelectedPaymentMethod(paymentMethod || '')
-  }, [paymentMethod, router, shippingAddress.address])
+    setSelectedPaymentMethod(paymentMethod || '');
+  }, [paymentMethod, router, shippingAddress.address]);
+
+
 
   return (
     <div>
       <Head>
-        <title>Payment - JIGIT</title>
-        <meta name="description" content="Payment - JIGIT" />
+        <title>{t.headPayment} - JIGIT</title>
+        <meta name="description" content={`${t.headPayment} - JIGIT`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -65,7 +71,7 @@ export default function Payment() {
           className="md:w-[35%] mx-auto py-12 px-5"
           onSubmit={submitHandler}
         >
-          <h1 className="mb-4 text-xl">Payment Method</h1>
+          <h1 className="mb-4 text-xl">{t.paymentMethod}</h1>
           <div className="w-max mx-auto sm:flex gap-5 text-white">
             <div className="input-payment relative flex text-black border w-[150px] h-[150px] duration-500 hover:scale-[1.02] hover:border-b-[2px] hover:border-b-black">
               <input
@@ -91,9 +97,9 @@ export default function Payment() {
               type="button"
               className="default-button"
             >
-              Back
+              {t.paymentButtonNext}
             </button>
-            <button className="primary-button">Next</button>
+            <button className="primary-button">{t.paymentButtonBack}</button>
           </div>
         </form>
       </main>

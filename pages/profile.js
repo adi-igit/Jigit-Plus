@@ -2,11 +2,14 @@
 import FooterMain from '@/components/FooterMain';
 import Navbar from '@/components/Navbar';
 import { updateProfileValidate } from '@/lib/validate';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
 import { getError } from '@/utils/error';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { getSession, signIn, useSession } from 'next-auth/react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { toast } from 'react-toastify';
 
@@ -47,27 +50,32 @@ export default function Profile() {
         email,
         password,
       });
-       const result = await signIn('credentials', {
+      const result = await signIn('credentials', {
         redirect: false,
         email,
         password,
       });
 
-      toast.success('Profile updated successfully');
+      toast.success(`${t.updateProfileToastSuccess}`);
 
       if (result.error) {
         toast.error(result.error);
       }
     } catch (err) {
-      toast.error(getError(err));
+      toast.error(`${t.updateProfileToastError}`);
+      console.log(getError(err))
     }
   }
+
+  const router = useRouter();
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
 
   return (
     <div>
       <Head>
-        <title>Login - JIGIT</title>
-        <meta name="description" content="Login - JIGIT" />
+        <title>{t.headUpdateProfile} - JIGIT</title>
+        <meta name="description" content={`${t.headUpdateProfile} - JIGIT`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -77,10 +85,10 @@ export default function Profile() {
           onSubmit={formik.handleSubmit}
           className="mx-auto md:w-[50%] lg:w-[30%] border py-12 px-5"
         >
-          <h1 className="mb-4 text-xl sm:text-2xl">Update Profile</h1>
+          <h1 className="mb-4 text-xl sm:text-2xl">{t.updateProfileText}</h1>
 
           <div className="mb-4">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">{t.updateProfileName}</label>
             <input
               type="name"
               id="name"
@@ -91,12 +99,14 @@ export default function Profile() {
                   : ''
               }`}
               placeholder={`${
-                formik.errors.name && formik.touched.name ? 'Required...' : ''
+                formik.errors.name && formik.touched.name
+                  ? `${t.updateProfileValidateRequired}`
+                  : ''
               }`}
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">{t.updateProfileEmail}</label>
             <input
               type="email"
               id="email"
@@ -107,12 +117,14 @@ export default function Profile() {
                   : ''
               }`}
               placeholder={`${
-                formik.errors.email && formik.touched.email ? 'Required...' : ''
+                formik.errors.email && formik.touched.email
+                  ? `${t.updateProfileValidateRequired}`
+                  : ''
               }`}
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">{t.updateProfilePassword}</label>
             <input
               type="password"
               id="password"
@@ -124,13 +136,13 @@ export default function Profile() {
               }`}
               placeholder={`${
                 formik.errors.password && formik.touched.password
-                  ? 'Required...'
+                  ? `${t.updateProfileValidateRequired}`
                   : ''
               }`}
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="cpassword">Confirm Password</label>
+            <label htmlFor="cpassword">{t.updateProfileConfirmPassword}</label>
             <input
               type="password"
               id="cpassword"
@@ -142,14 +154,14 @@ export default function Profile() {
               }`}
               placeholder={`${
                 formik.errors.cpassword && formik.touched.cpassword
-                  ? 'Required...'
+                  ? `${t.updateProfileValidateRequired}`
                   : ''
               }`}
             />
           </div>
           <div>
             <button type="submit" className="primary-button">
-              Update Profile
+              {t.updateProfileButtonUpdate}
             </button>
           </div>
         </form>

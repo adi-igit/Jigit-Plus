@@ -10,6 +10,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { toast } from 'react-toastify';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -52,6 +54,10 @@ function reducer(state, action) {
 
 export default function Order() {
   // order/:id
+
+  const router = useRouter();
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
@@ -135,10 +141,11 @@ export default function Order() {
           details
         );
         dispatch({ type: 'PAY_SUCCESS', payload: data[0] });
-        toast.success('Order is paid successfully');
+        toast.success(`${t.orderToastSuccess}`);
       } catch (err) {
         dispatch({ type: 'PAY_FAIL', payload: getError(err) });
-        toast.error(getError(err));
+        toast.error(`${t.orderToastError}`);
+        console.log(getError(err))
       }
     });
   };
@@ -150,23 +157,23 @@ export default function Order() {
   return (
     <div>
       <Head>
-        <title>Order {orderId} - JIGIT</title>
-        <meta name="description" content="Order Order - JIGIT" />
+        <title>{orderId} - JIGIT</title>
+        <meta name="description" content={`${t.headOrder} - JIGIT`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
       <main className="pt-[100px] px-2">
-        <h1 className="mb-4 text-xl sm:text-2xl">{`Order ${orderId}`}</h1>
+        <h1 className="mb-4 text-xl sm:text-2xl">{`${t.orderText} ${orderId}`}</h1>
         {loading ? (
-          <div>Loading...</div>
+          <div>{t.orderLoading}</div>
         ) : error ? (
           <div className="alert-error">{error}</div>
         ) : (
           <div className="grid md:grid-cols-4 md:gap-5">
             <div className="overflow-x-auto md:col-span-3">
               <div className="card  p-5">
-                <h2 className="mb-2 text-lg">Shipping Address</h2>
+                <h2 className="mb-2 text-lg">{t.orderShippingAddress}</h2>
                 <div>
                   {shippingAddress.fullName}, {shippingAddress.address},{' '}
                   {shippingAddress.city}, {shippingAddress.postalCode},{' '}
@@ -174,32 +181,32 @@ export default function Order() {
                 </div>
                 {isDelivered ? (
                   <div className="alert-success">
-                    Delivered at {deliveredAt}
+                    {t.orderDeliveredAt} {deliveredAt}
                   </div>
                 ) : (
-                  <div className="alert-error">Not delivered</div>
+                  <div className="alert-error">{t.orderNotDelivered}</div>
                 )}
               </div>
 
               <div className="card p-5">
-                <h2 className="mb-2 text-lg">Payment Method</h2>
+                <h2 className="mb-2 text-lg">{t.orderPaymentMethod}</h2>
                 <div>{paymentMethod}</div>
                 {isPaid ? (
-                  <div className="alert-success">Paid at {paidAt}</div>
+                  <div className="alert-success">{t.orderPaidAt} {paidAt}</div>
                 ) : (
-                  <div className="alert-error">Not paid</div>
+                  <div className="alert-error">{t.orderNotPaid}</div>
                 )}
               </div>
 
               <div className="card overflow-x-auto p-5">
-                <h2 className="mb-2 text-lg">Order Items</h2>
+                <h2 className="mb-2 text-lg">{t.orderItems}</h2>
                 <table className="min-w-full">
                   <thead className="border-b">
                     <tr>
-                      <th className="px-5 text-left">Item</th>
-                      <th className="    p-5 text-right">Quantity</th>
-                      <th className="  p-5 text-right">Price</th>
-                      <th className="p-5 text-right">Subtotal</th>
+                      <th className="px-5 text-left">{t.orderItem}</th>
+                      <th className="    p-5 text-right">{t.orderQuantity}</th>
+                      <th className="  p-5 text-right">{t.orderPrice}</th>
+                      <th className="p-5 text-right">{t.orderSubtotal}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -233,36 +240,36 @@ export default function Order() {
             </div>
             <div>
               <div className="card  p-5">
-                <h2 className="mb-2 text-lg">Order Summary</h2>
+                <h2 className="mb-2 text-lg">{t.orderSummaryOrder}</h2>
                 <ul>
                   <li>
                     <div className="mb-2 flex justify-between">
-                      <div>Items</div>
+                      <div>{t.orderItemsText}</div>
                       <div>${itemsPrice}</div>
                     </div>
                   </li>{' '}
                   <li>
                     <div className="mb-2 flex justify-between">
-                      <div>Tax</div>
+                      <div>{t.orderTax}</div>
                       <div>${taxPrice}</div>
                     </div>
                   </li>
                   <li>
                     <div className="mb-2 flex justify-between">
-                      <div>Shipping</div>
+                      <div>{t.orderShipping}</div>
                       <div>${shippingPrice}</div>
                     </div>
                   </li>
                   <li>
                     <div className="mb-2 flex justify-between">
-                      <div>Total</div>
+                      <div>{t.orderTotal}</div>
                       <div>${totalPrice}</div>
                     </div>
                   </li>
                   {!isPaid && (
                     <li>
                       {isPending ? (
-                        <div>Loading...</div>
+                        <div>{t.orderLoading}</div>
                       ) : (
                         <div className="w-full">
                           <PayPalButtons
@@ -272,7 +279,7 @@ export default function Order() {
                           ></PayPalButtons>
                         </div>
                       )}
-                      {loadingPay && <div>Loading...</div>}
+                      {loadingPay && <div>{t.orderLoading}</div>}
                     </li>
                   )}
                 </ul>

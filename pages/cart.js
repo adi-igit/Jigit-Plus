@@ -7,6 +7,8 @@ import React from 'react';
 import { SlClose } from 'react-icons/sl';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
 
 export default function Cart() {
   const router = useRouter();
@@ -23,20 +25,23 @@ export default function Cart() {
     setCookie(state);
   };
 
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
+
   return (
     <>
       <Head>
-        <title>Cart - JIGIT</title>
-        <meta name="description" content="Product - JIGIT" />
+        <title>{t.headCart} - JIGIT</title>
+        <meta name="description" content={`${t.headCart} - JIGIT`}/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
       <div className="pt-[120px] px-[50px]">
-        <h1 className="mb-4 text-lg">Shopping Cart</h1>
+        <h1 className="mb-4 text-lg">{t.cartShoppingCart}</h1>
         {state.length === 0 ? (
           <div>
-            Cart is empty. <Link href="/">Go Shopping</Link>
+            {t.cartIsEmpty}. <Link href="/">{t.cartGoShopping}</Link>
           </div>
         ) : (
           <div className="grid md:grid-cols-4 md:gap-5">
@@ -44,12 +49,12 @@ export default function Cart() {
               <table className="min-h-full w-full">
                 <thead className="border-b">
                   <tr>
-                    <th className="p-5 text-left">Item</th>
-                    <th className="p-5 text-right">Quantity</th>
-                    <th className="p-5 text-center">Size</th>
-                    <th className="p-5 text-center">Color</th>
-                    <th className="p-5 text-right">Price</th>
-                    <th className="p-5">Action</th>
+                    <th className="p-5 text-left">{t.cartItem}</th>
+                    <th className="p-5 text-right">{t.cartQuantity}</th>
+                    <th className="p-5 text-center">{t.cartSize}</th>
+                    <th className="p-5 text-center">{t.cartColor}</th>
+                    <th className="p-5 text-right">{t.cartPrice}</th>
+                    <th className="p-5">{t.cartAction}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -101,7 +106,7 @@ export default function Cart() {
               <ul>
                 <li>
                   <div className="pb-8 text-lg">
-                    Subtotal ({state.reduce((a, c) => a + c.quantity, 0)}) :{' '}
+                    {t.cartSubtotal} ({state.reduce((a, c) => a + c.quantity, 0)}) :{' '}
                     {state
                       .reduce((a, c) => a + c.quantity * c.price, 0)
                       .toFixed(2)}{' '}
@@ -113,7 +118,7 @@ export default function Cart() {
                     onClick={() => router.push('login?redirect=/shipping')}
                     className="primary-button w-full"
                   >
-                    CHECK OUT
+                    {t.cartCheckout}
                   </button>
                 </li>
               </ul>

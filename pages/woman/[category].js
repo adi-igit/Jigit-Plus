@@ -3,26 +3,34 @@ import FooterMain from '@/components/FooterMain';
 import Navbar from '@/components/Navbar';
 import Pagination from '@/components/Pagination';
 import { paginate } from '@/lib/helper';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
 import clientPromise from '@/utils/mongodb';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales }) {
   const client = await clientPromise;
   const db = client.db('shop-db');
 
-  const products = await db
-    .collection('products')
-    .find({})
-    .toArray();
+  const products = await db.collection('products').find({}).toArray();
 
   if (!products) return console.error('Failed to fetch products!');
 
+  const product = products.map((p) => p.category);
+  const paths = product
+    .map((category) =>
+      locales.map((locale) => ({
+        params: { category: category.toString() },
+        locale,
+      }))
+    )
+    .flat();
+
   return {
-    paths: products.map((product) => ({
-      params: { category: product.category.toString() },
-    })),
+    paths,
     fallback: false,
   };
 }
@@ -68,11 +76,15 @@ export default function Products({ products }) {
 
   const paginatedPosts = paginate(products, currentPage, pageSize);
 
+  const router = useRouter();
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
+
   return (
     <>
       <Head>
-        <title>Products - JIGIT</title>
-        <meta name="description" content="Products - JIGIT" />
+        <title>{t.headWoman} - JIGIT</title>
+        <meta name="description" content={`${t.headWoman} - JIGIT`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -80,19 +92,7 @@ export default function Products({ products }) {
         <Navbar />
         <div className="pt-[100px]">
           <h1 className="text-center text-[50px]">JIGIT+</h1>
-          <p className="text-[14px] text-center p-[10px]">
-            JIGIT has an ongoing commitment to its customers around the world in
-            providing an excellent customer experience to all. As part of these
-            efforts, we are committed to providing a website that is accessible
-            to the widest possible audience, regardless of technology or
-            ability. JIGIT is committed to aligning its website and its
-            operations in substantial conformance with generally-recognized and
-            accepted guidelines and/or standards for website accessibility (as
-            these may change from time to time). To assist in these efforts,
-            JIGIT has partnered with experienced internationally reputable
-            consultants and is working to increase the accessibility and
-            usability of our website.
-          </p>
+          <p className="text-[14px] text-center p-[10px]">{t.about}</p>
         </div>
         <div className="min-h-[100vh] p-[30px] flex gap-[30px] justify-center items-center flex-wrap">
           {paginatedPosts.map((product) => (

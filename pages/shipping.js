@@ -7,6 +7,8 @@ import FooterMain from '@/components/FooterMain';
 import { useDispatch } from 'react-redux';
 import { saveShippingAddress } from '@/redux/reducer';
 import { useRouter } from 'next/router';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
 
 export default function Shipping() {
   const router = useRouter();
@@ -32,11 +34,14 @@ export default function Shipping() {
     router.push('/payment');
   }
 
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
+
   return (
     <div>
       <Head>
-        <title>Shipping - JIGIT</title>
-        <meta name="description" content="Shipping - JIGIT" />
+        <title>{t.headShipping} - JIGIT</title>
+        <meta name="description" content={`${t.headShipping} - JIGIT`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -47,10 +52,10 @@ export default function Shipping() {
           className="mx-auto md:w-[35%] py-12 px-5"
           onSubmit={formik.handleSubmit}
         >
-          <h1 className="mb-4 text-xl sm:text-2xl">Shipping address</h1>
+          <h1 className="mb-4 text-xl sm:text-2xl">{t.shippingAddress}</h1>
           <div className="mb-4">
             <label htmlFor="fullName" className="text-[16px] text-gray-600">
-              Full Name
+              {t.shippingFullName}
             </label>
             <input
               type="text"
@@ -71,7 +76,7 @@ export default function Shipping() {
           </div>
           <div className="mb-4">
             <label htmlFor="address" className="text-gray-600">
-              Address
+              {t.shippingPlaceAddress}
             </label>
             <input
               type="text"
@@ -92,7 +97,7 @@ export default function Shipping() {
           </div>
           <div className="mb-4">
             <label htmlFor="city" className="text-gray-600">
-              City
+              {t.shippingCity}
             </label>
             <input
               type="text"
@@ -111,7 +116,7 @@ export default function Shipping() {
           </div>
           <div className="mb-4">
             <label htmlFor="postalCode" className="text-gray-600">
-              Postal Code
+              {t.shippingPostalCode}
             </label>
             <input
               type="text"
@@ -132,7 +137,7 @@ export default function Shipping() {
           </div>
           <div className="mb-4">
             <label htmlFor="country" className="text-gray-600">
-              Country
+              {t.shippingCountry}
             </label>
             <input
               type="text"
@@ -153,7 +158,7 @@ export default function Shipping() {
           </div>
           <div>
             <button type="submit" className="primary-button">
-              Next
+              {t.shippingButtonNext}
             </button>
           </div>
         </form>

@@ -3,6 +3,9 @@ import { TfiClose } from 'react-icons/tfi';
 import { motion } from 'framer-motion';
 import useSWR from 'swr';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -25,7 +28,7 @@ export default function SideDrop({ drop, setDrop }) {
     fetcher
   );
 
-    console.log(man)
+  console.log(man);
 
   // if you want you can display error directly in ui
   // if (errorMan) return <div>Failed to load</div>;
@@ -35,6 +38,10 @@ export default function SideDrop({ drop, setDrop }) {
   // if (!man) return <div>Loading...</div>;
   // if (!woman) return <div>Loading...</div>;
   // if (!kidsBoy) return <div>Loading...</div>;
+
+  const router = useRouter();
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
 
   return (
     <>
@@ -58,7 +65,7 @@ export default function SideDrop({ drop, setDrop }) {
                 category === 1 ? 'border-b font-bold' : ''
               } text-[14px] cursor-pointer`}
             >
-              MAN
+              {t.man}
             </p>
             <p
               onClick={() => setCategory(2)}
@@ -66,7 +73,7 @@ export default function SideDrop({ drop, setDrop }) {
                 category === 2 ? 'border-b font-bold' : ''
               } text-[14px] cursor-pointer`}
             >
-              WOMAN
+              {t.woman}
             </p>
             <p
               onClick={() => setCategory(3)}
@@ -74,7 +81,7 @@ export default function SideDrop({ drop, setDrop }) {
                 category === 3 ? 'border-b font-bold' : ''
               } text-[14px] cursor-pointer`}
             >
-              KIDS
+              {t.kids}
             </p>
           </div>
 
@@ -95,9 +102,11 @@ export default function SideDrop({ drop, setDrop }) {
                   </Link>
                 ))}
               </ul>
-              <p className="text-[14px] px-[20px] mb-[10px]">SPECIAL EDITION</p>
+              <p className="text-[14px] px-[20px] mb-[10px]">
+                {t.specialEdition}
+              </p>
               <p className="text-[16px] py-[5px] px-[20px] bg-yellow-400 text-black">
-                SALE
+                {t.sale}
               </p>
             </>
           )}
@@ -116,9 +125,11 @@ export default function SideDrop({ drop, setDrop }) {
                   </Link>
                 ))}
               </ul>
-              <p className="text-[14px] px-[20px] mb-[10px]">SPECIAL EDITION</p>
+              <p className="text-[14px] px-[20px] mb-[10px]">
+                {t.specialEdition}
+              </p>
               <p className="text-[16px] py-[5px] px-[20px] bg-yellow-400 text-black">
-                SALE
+                {t.sale}
               </p>
             </>
           )}
@@ -171,9 +182,11 @@ export default function SideDrop({ drop, setDrop }) {
                   </ul>
                 )}
               </div>
-              <p className="text-[14px] px-[20px] mb-[10px]">SPECIAL EDITION</p>
+              <p className="text-[14px] px-[20px] mb-[10px]">
+                {t.specialEdition}
+              </p>
               <p className="text-[16px] py-[5px] px-[20px] bg-yellow-400 text-black">
-                SALE
+                {t.sale}
               </p>
             </>
           )}

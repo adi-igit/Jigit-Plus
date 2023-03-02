@@ -1,6 +1,8 @@
 import CheckoutWizard from '@/components/CheckoutWizard';
 import FooterMain from '@/components/FooterMain';
 import Navbar from '@/components/Navbar';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
 import { cartClearItems } from '@/redux/reducer';
 import { getSession } from 'next-auth/react';
 import Head from 'next/head';
@@ -84,11 +86,14 @@ export default function PlaceOrder() {
       });
   };
 
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
+
   return (
     <div>
       <Head>
-        <title>Place Order - JIGIT</title>
-        <meta name="description" content="Place Order - JIGIT" />
+        <title>{t.headPlaceOrder} - JIGIT</title>
+        <meta name="description" content={`${t.headPlaceOrder} - JIGIT`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -97,17 +102,17 @@ export default function PlaceOrder() {
         <CheckoutWizard activeStep={3} />
       </div>
       <main className="sm:py-12 sm:px-5 sm:mb-[200px]">
-        <h1 className="mb-4 text-xl sm:text-2xl">Place Order</h1>
+        <h1 className="mb-4 text-xl sm:text-2xl">{t.placeOrder}</h1>
         {state.length === 0 ? (
           <div className="">
-            Cart is empty.
-            <Link href="/products">Go shopping</Link>
+            {t.placeOrderCartIsEmpty}
+            <Link href="/products">{t.placeOrderGoShopping}</Link>
           </div>
         ) : (
           <div className="grid md:grid-cols-4 md:gap-5">
             <div className="overflow-x-auto md:col-span-3">
               <div className="card p-5">
-                <h2 className="mb-2 text-lg">Shipping Address</h2>
+                <h2 className="mb-2 text-lg">{t.placeOrderShippingAddress}</h2>
                 <div>
                   {shippingAddress.fullName}, {shippingAddress.address},{' '}
                   {shippingAddress.city}, {shippingAddress.postalCode},{' '}
@@ -116,29 +121,29 @@ export default function PlaceOrder() {
                 <div>
                   <Link href="/shipping" className="flex gap-2 items-center">
                     <AiOutlineEdit size={20} className="text-yellow-800" />
-                    <p>Edit</p>
+                    <p>{t.placeOrderEdit}</p>
                   </Link>
                 </div>
               </div>
               <div className="card  p-5">
-                <h2 className="mb-2 text-lg">Payment Method</h2>
+                <h2 className="mb-2 text-lg">{t.placeOrderPaymentMethod}</h2>
                 <div>{paymentMethod}</div>
                 <div>
                   <Link href="/payment" className="flex gap-2 items-center">
                     <AiOutlineEdit size={20} className="text-yellow-800" />
-                    <p>Edit</p>
+                    <p>{t.placeOrderEdit}</p>
                   </Link>
                 </div>
               </div>
               <div className="card overflow-x-auto p-5">
-                <h2 className="mb-2 text-lg">Order Items</h2>
+                <h2 className="mb-2 text-lg">{t.placeOrderOrderItems}</h2>
                 <table className="min-w-full">
                   <thead className="border-b">
                     <tr>
-                      <th className="px-5 text-left">Item</th>
-                      <th className="p-5 text-right">Quantity</th>
-                      <th className="p-5 text-right">Price</th>
-                      <th className="p-5 text-right">Subtotal</th>
+                      <th className="px-5 text-left">{t.placeOrderItem}</th>
+                      <th className="p-5 text-right">{t.placeOrderQuantity}</th>
+                      <th className="p-5 text-right">{t.placeOrderPrice}</th>
+                      <th className="p-5 text-right">{t.placeOrderSubtotal}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -171,35 +176,35 @@ export default function PlaceOrder() {
                 <div className="mt-4">
                   <Link href="/cart" className="flex gap-2 items-center">
                     <AiOutlineEdit size={20} className="text-yellow-800" />
-                    <p>Edit</p>
+                    <p>{t.placeOrderEdit}</p>
                   </Link>
                 </div>
               </div>
             </div>
             <div className="card p-5 h-max">
-              <h2 className="mb-2 text-lg">Order Summary</h2>
+              <h2 className="mb-2 text-lg">{t.placeOrderSummaryOrder}</h2>
               <ul>
                 <li>
                   <div className="mb-2 flex justify-between">
-                    <div>Items</div>
+                    <div>{t.placeOrderItems}</div>
                     <div>${itemsPrice}</div>
                   </div>
                 </li>
                 <li>
                   <div className="mb-2 flex justify-between">
-                    <div>Tax</div>
+                    <div>{t.placeOrderTax}</div>
                     <div>${taxPrice}</div>
                   </div>
                 </li>
                 <li>
                   <div className="mb-2 flex justify-between">
-                    <div>Shipping</div>
+                    <div>{t.placeOrderShipping}</div>
                     <div>${shippingPrice}</div>
                   </div>
                 </li>
                 <li>
                   <div className="mb-2 flex justify-between">
-                    <div>Total</div>
+                    <div>{t.placeOrderTotal}</div>
                     <div>${totalPrice}</div>
                   </div>
                 </li>
@@ -209,7 +214,7 @@ export default function PlaceOrder() {
                     onClick={placeOrderHandler}
                     className="primary-button w-full"
                   >
-                    {loading ? 'Loading...' : 'Place Order'}
+                    {loading ? `${t.placeOrderButtonLoading}` : `${t.placeOrderButtonPlaceOrder}`}
                   </button>
                 </li>
               </ul>

@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
 
 const BASE_URL = 'https://jigit-shop.vercel.app';
 
@@ -45,7 +47,7 @@ export default function Login() {
       router.push(status.url);
     }
     if (!status.ok) {
-      toast.error('Invalid email or password...')
+      toast.error('Invalid email or password...');
     }
   }
 
@@ -56,11 +58,14 @@ export default function Login() {
     });
   };
 
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
+
   return (
     <>
       <Head>
-        <title>Login - JIGIT</title>
-        <meta name="description" content="Login - JIGIT" />
+        <title>{t.headLogin} - JIGIT</title>
+        <meta name="description" content={`${t.headLogin} - JIGIT`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -70,30 +75,36 @@ export default function Login() {
           onSubmit={formik.handleSubmit}
           className="mx-auto md:w-[50%] lg:w-[30%] border py-12 px-5"
         >
-          <h1 className="mb-4 text-xl font-[600]">Login</h1>
+          <h1 className="mb-4 text-xl font-[600]">{t.loginText}</h1>
           <div className="mb-4">
             <label htmlFor="email" className="text-sm text-gray-600">
-              Email
+              {t.loginEmail}
             </label>
             <input
               type="email"
               id="email"
               name="email"
-              className={`${formik.errors.email && formik.touched.email ? 'border-red-500' : ''} w-full border outline-none p-1 rounded-md`}
+              className={`${
+                formik.errors.email && formik.touched.email
+                  ? 'border-red-500'
+                  : ''
+              } w-full border outline-none p-1 rounded-md`}
               {...formik.getFieldProps('email')}
             />
           </div>
-          <div
-            className='mb-4'
-          >
+          <div className="mb-4">
             <label htmlFor="password" className="text-sm text-gray-600">
-              Password
+              {t.loginPassword}
             </label>
             <input
               type="password"
               id="password"
               name="password"
-              className={`${formik.errors.password && formik.touched.password ? 'border-red-500' : ''} w-full border outline-none p-1 rounded-md`}
+              className={`${
+                formik.errors.password && formik.touched.password
+                  ? 'border-red-500'
+                  : ''
+              } w-full border outline-none p-1 rounded-md`}
               autoFocus
               {...formik.getFieldProps('password')}
             />
@@ -103,7 +114,7 @@ export default function Login() {
               type="submit"
               className="w-full my-2 border rounded-md py-2 flex justify-center gap-2 text-white bg-black hover:bg-gray-200 hover:border-blue-900 hover:text-black"
             >
-              Login
+              {t.loginButton}
             </button>
           </div>
           <div className="input-button">
@@ -112,7 +123,7 @@ export default function Login() {
               type="button"
               className="w-full border rounded-md py-2 flex justify-center gap-2 hover:bg-gray-200"
             >
-              Sign In with Google{' '}
+              {t.loginButtonWithGoogle}
               <Image
                 alt=""
                 src={'/assets/google.svg'}
@@ -122,12 +133,12 @@ export default function Login() {
             </button>
           </div>
           <div className="mt-4 text-sm">
-            Don&apos;t have an account? &nbsp;
+            {t.loginDonotHaveAccount}{' '}
             <Link
               href="/register"
               className="text-sm font-semibold hover:underline"
             >
-              Register
+              {t.loginButtonRegister}
             </Link>
           </div>
         </form>

@@ -6,6 +6,9 @@ import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import en from '@/public/locales/en/en';
+import ru from '@/public/locales/ru/ru';
 
 export async function getServerSideProps({ req }){
   const session = await getSession({ req });
@@ -58,20 +61,23 @@ export default function OrderHistory() {
     fetchOrders();
   }, []);
 
+  const router = useRouter();
+  const { locale } = router;
+  const t = locale === 'en' ? en : ru;
 
   return (
     <div>
       <Head>
-        <title>Order History - JIGIT</title>
-        <meta name="description" content="Order History - JIGIT" />
+        <title>{t.headOrderHistory} - JIGIT</title>
+        <meta name="description" content={`${t.headOrderHistory} - JIGIT`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
       <main className="min-h-screen pt-[100px] px-2">
-        <h1 className='mb-4 text-xl sm:text-2xl'>Order History</h1>
+        <h1 className='mb-4 text-xl sm:text-2xl'>{t.orderHistoryText}</h1>
         {loading ? (
-          <div>Loading...</div>
+          <div>{t.orderHistoryLoading}</div>
         ) : error ? ( 
           <div className='alert-error'>{error}</div>
         ) : (
@@ -79,12 +85,12 @@ export default function OrderHistory() {
             <table className='min-w-full'>
               <thead className='border-b'>
                 <tr>
-                  <th className='px-5 text-left'>ID</th>
-                  <th className='p-5 text-left'>DATE</th>
-                  <th className='p-5 text-left'>TOTAL</th>
-                  <th className='p-5 text-left'>PAID</th>
-                  <th className='p-5 text-left'>DELIVERED</th>
-                  <th className='p-5 text-left'>ACTION</th>
+                  <th className='px-5 text-left'>{t.orderHistoryId}</th>
+                  <th className='p-5 text-left'>{t.orderHistoryDate}</th>
+                  <th className='p-5 text-left'>{t.orderHistoryTotal}</th>
+                  <th className='p-5 text-left'>{t.orderHistoryPaid}</th>
+                  <th className='p-5 text-left'>{t.orderHistoryDelivered}</th>
+                  <th className='p-5 text-left'>{t.orderHistoryAction}</th>
                 </tr>
               </thead>
               <tbody>
@@ -101,7 +107,7 @@ export default function OrderHistory() {
                     </td>
                     <td className='p-5 text-blue-900'>
                       <Link href={`/order/${order._id}`} passHref>
-                        Details
+                        {t.orderHistoryDetails}
                       </Link>
                     </td>
                   </tr>
