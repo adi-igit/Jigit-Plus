@@ -9,7 +9,7 @@ export default function SliderImg({ img1, img2, img3 }) {
     <>
       {images.map((img, i) => (
         <div key={i} className={styles.sliderImgContainer}>
-          <img src={img} alt="" />
+          <img src={img} alt="" className='w-screen h-screen object-cover' />
         </div>
       ))}
     </>
