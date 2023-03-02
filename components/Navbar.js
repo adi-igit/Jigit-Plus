@@ -130,8 +130,8 @@ export default function Navbar() {
             </Link>
           )}
           <select onChange={changeLanguage} defaultValue={locale} className='bg-transparent cursor-pointer'>
-            <option value="en" className='bg-black/10 cursor-pointer'>EN</option>
-            <option value="ru" className='bg-black/10 cursor-pointer'>RU</option>
+            <option value="en" className='text-[12px] sm:text-normal bg-blue-800/60 cursor-pointer'>EN</option>
+            <option value="ru" className='text-[12px] sm:text-normal h-[10px] bg-blue-800/60 cursor-pointer'>RU</option>
           </select>
           <Link href="/cart" passHref className="relative">
             {cartItemsCount > 0 && (

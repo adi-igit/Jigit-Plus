@@ -5,6 +5,7 @@ export default {
   // Navbar translation
   helloWorld: 'Hello World!',
   search: 'SEARCH',
+  login: 'LOGIN',
   updateProfile: 'updateProfile',
   profile: 'Profile',
   orderHistory: 'Order History',
