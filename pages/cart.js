@@ -3,7 +3,7 @@ import { cartAddItem, cartRemoveItem } from '@/redux/reducer';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { SlClose } from 'react-icons/sl';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -15,7 +15,6 @@ export default function Cart() {
   const state = useSelector((state) => state.app.cart.cartItems);
   const dispatch = useDispatch();
   const removeItemHandler = (item) => {
-    console.log(item);
     dispatch(cartRemoveItem(item));
   };
 
@@ -41,7 +40,7 @@ export default function Cart() {
         <h1 className="mb-4 text-lg">{t.cartShoppingCart}</h1>
         {state.length === 0 ? (
           <div>
-            {t.cartIsEmpty}. <Link href="/">{t.cartGoShopping}</Link>
+            {t.cartIsEmpty}. <Link href="/" className='font-[500] underline'>{t.cartGoShopping}</Link>
           </div>
         ) : (
           <div className="grid md:grid-cols-4 md:gap-5">
@@ -90,7 +89,7 @@ export default function Cart() {
                         </select>
                       </td>
                       <td className="p-5 text-right">{item.size}</td>
-                      <td className="p-5 text-right">{item.color}</td>
+                      <td className="p-5 text-right">{item.chosenSlug}</td>
                       <td className="p-5 text-right">EUR {item.price}</td>
                       <td className="text-center">
                         <button onClick={() => removeItemHandler(item)}>

@@ -28,8 +28,6 @@ export default function SideDrop({ drop, setDrop }) {
     fetcher
   );
 
-  console.log(man);
-
   // if you want you can display error directly in ui
   // if (errorMan) return <div>Failed to load</div>;
   // if (errorWoman) return <div>Failed to load</div>;

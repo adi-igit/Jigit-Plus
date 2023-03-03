@@ -29,6 +29,13 @@ $font-stack: 'Roboto', sans-serif;
   color: #4b5563;
 }
 
+.input-colors input[type='radio'] {
+  display: none;
+}
+.input-colors input[type='radio']:checked + label {
+  border: 2px solid white;
+}
+
 .primary-button {
   @apply w-max px-6 py-2 my-2 border rounded-md flex justify-center gap-2 text-white bg-blue-900 hover:bg-gray-200 hover:border-blue-900 hover:text-black;
 }

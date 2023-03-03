@@ -17,7 +17,7 @@ export const ReducerSlice = createSlice({
       );
       const cartItems = existItem
         ? state.cart.cartItems.map((item) =>
-            item.name === existItem.name ? newItem : item
+            item.name === existItem.name || item.slug === existItem.slug || item.slug2 === existItem.slug2 ? newItem : item
           )
         : [...state.cart.cartItems, newItem];
       return { ...state, cart: { ...state.cart, cartItems } };

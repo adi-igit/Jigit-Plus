@@ -73,11 +73,12 @@ export default function ProductId({ product, relatedProducts }) {
   const [size, setSize] = useState('');
   const router = useRouter();
   const { id } = router.query;
-  const [color, setColor] = useState(null);
+  const [color, setColor] = useState('');
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(null);
   const { locale } = router;
   const t = locale === 'en' ? en : ru;
+  const chosenSlug = show ? product.slug2 : product.slug
 
   const formik = useFormik({
     initialValues: {
@@ -115,12 +116,12 @@ export default function ProductId({ product, relatedProducts }) {
     if (!size) {
       alert(`${t.productSelectSize}`);
     } else {
-      dispatch(cartAddItem({ ...product, quantity, color, size }));
+      dispatch(cartAddItem({ ...product, quantity, color, size, chosenSlug }));
       router.push('/cart');
     }
   };
 
-  
+
 
   return (
     <>
@@ -225,10 +226,32 @@ export default function ProductId({ product, relatedProducts }) {
                   product.colors.map((item, i) => (
                     <>
                       <div
+                        key={item}
+                        style={{ backgroundColor: `${item}` }}
+                        className={`input-colors relative flex text-black border w-[30px] h-[30px] duration-500 hover:scale-[1.02] hover:border-b-[2px] hover:border-b-black`}
+                      >
+                        <input
+                          style={{ backgroundColor: `${item}` }}
+                          name={`${item}`}
+                          className="p-2 outline-none focus:ring-0"
+                          id={`${item}`}
+                          type="radio"
+                          checked={color === `${item}`}
+                          onChange={() => setColor(`${item}`)}
+                          onClick = {() => setShow(item === product.colors[0] && false || item === product.colors[1] && true)}
+                        />
+                        <label
+                          className={`absolute m-auto top-0 bottom-0 left-0 right-0 font-bold cursor-pointer`}
+                          htmlFor={`${item}`}
+                        >
+                          {/* <span className="text-[#0E79BF]">pal</span> */}
+                        </label>
+                      </div>
+                      {/* <div
                         key={i}
                         className={`${item ? 'inline-block' : 'hidden'}`}
                         onClick={() =>
-                          setColor(show ? product.slug : product.slug2)
+                          setColor(show === true ? product.slug : product.slug2)
                         }
                       >
                         <button
@@ -238,13 +261,11 @@ export default function ProductId({ product, relatedProducts }) {
                           className="p-2 rounded-full"
                           value={item}
                         ></button>
-                      </div>
+                      </div> */}
                     </>
                   ))}
               </div>
-              <p className="mt-5 text-gray-600 text-[12px]">
-                {show ? product.slug2 : product.slug}
-              </p>
+              <p className="mt-5 text-gray-600 text-[12px]">{chosenSlug}</p>
               <p className="mt-4 text-gray-600 text-[12px]">
                 {product.price.toFixed(2)} EUR
               </p>
