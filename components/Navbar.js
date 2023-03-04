@@ -129,7 +129,7 @@ export default function Navbar() {
               {t.login}
             </Link>
           )}
-          <select onChange={changeLanguage} defaultValue={locale} className='p-2 mx-2 border rounded-md focus:outline-none'>
+          <select onChange={changeLanguage} defaultValue={locale} className='p-2 mx-2 bg-transparent focus:outline-none'>
             <option value="en" className=''>EN</option>
             <option value="ru" className=''>RU</option>
           </select>
