@@ -1,15 +1,15 @@
-import CheckoutWizard from '@/components/CheckoutWizard';
-import FooterMain from '@/components/FooterMain';
-import Navbar from '@/components/Navbar';
-import en from '@/public/locales/en/en';
-import ru from '@/public/locales/ru/ru';
-import { savePaymentMethod } from '@/redux/reducer';
-import { getSession } from 'next-auth/react';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import CheckoutWizard from "@/components/CheckoutWizard";
+import FooterMain from "@/components/FooterMain";
+import Navbar from "@/components/Navbar";
+import en from "@/public/locales/en/en";
+import ru from "@/public/locales/ru/ru";
+import { savePaymentMethod } from "@/redux/reducer";
+import { getSession } from "next-auth/react";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
@@ -17,7 +17,7 @@ export async function getServerSideProps({ req }) {
   if (!session) {
     return {
       redirect: {
-        destination: '/login',
+        destination: "/login",
         permanent: false,
       },
     };
@@ -35,8 +35,8 @@ export default function Payment() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { locale } = router;
-  const t = locale === 'en' ? en : ru;
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const t = locale === "en" ? en : ru;
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
 
   function submitHandler(e) {
     e.preventDefault();
@@ -44,17 +44,15 @@ export default function Payment() {
       return toast.error(`${t.paymentToastError}`);
     }
     dispatch(savePaymentMethod(selectedPaymentMethod));
-    router.push('/placeorder');
+    router.push("/placeorder");
   }
 
   useEffect(() => {
     if (!shippingAddress.address) {
-      return router.push('/shipping');
+      return router.push("/shipping");
     }
-    setSelectedPaymentMethod(paymentMethod || '');
+    setSelectedPaymentMethod(paymentMethod || "");
   }, [paymentMethod, router, shippingAddress.address]);
-
-
 
   return (
     <div>
@@ -79,8 +77,8 @@ export default function Payment() {
                 className="p-2 outline-none focus:ring-0"
                 id="paypal"
                 type="radio"
-                checked={selectedPaymentMethod === 'paypal'}
-                onChange={() => setSelectedPaymentMethod('paypal')}
+                checked={selectedPaymentMethod === "paypal"}
+                onChange={() => setSelectedPaymentMethod("paypal")}
               />
               <label
                 className="absolute top-0 bottom-0 left-0 right-0 text-xl font-bold pl-11 pt-[55px] cursor-pointer"
@@ -93,13 +91,13 @@ export default function Payment() {
           </div>
           <div className="mb-4 mt-32 flex justify-between">
             <button
-              onClick={() => router.push('/shipping')}
+              onClick={() => router.push("/shipping")}
               type="button"
               className="default-button"
             >
-              {t.paymentButtonNext}
+              {t.paymentButtonBack}
             </button>
-            <button className="primary-button">{t.paymentButtonBack}</button>
+            <button className="primary-button">{t.paymentButtonNext}</button>
           </div>
         </form>
       </main>

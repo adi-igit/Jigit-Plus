@@ -40,7 +40,7 @@ export default function Cart() {
         <h1 className="mb-4 text-lg">{t.cartShoppingCart}</h1>
         {state.length === 0 ? (
           <div>
-            {t.cartIsEmpty}. <Link href="/" className='font-[500] underline'>{t.cartGoShopping}</Link>
+            {t.cartIsEmpty}. <Link href="/products" className='font-[500] underline'>{t.cartGoShopping}</Link>
           </div>
         ) : (
           <div className="grid md:grid-cols-4 md:gap-5">
