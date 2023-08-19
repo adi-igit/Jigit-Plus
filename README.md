@@ -10,8 +10,6 @@ Welcome to Jigit Plus - Next.js Edition! This repository contains an enhanced ve
 
 - **Effortless Branch Creation**: Create branches effortlessly with the correct naming convention directly from your Next.js development environment.
 
-- **Interactive Jira Integration**: Stay within your development workspace while interacting with Jira issues. View issue details, change status, and manage assignees without switching tabs.
-
 - **Time Logging Made Easy**: Log time spent on tasks directly from your Next.js IDE, simplifying your time tracking process.
 
 - **Custom Workflow Configuration**: Tailor Jigit Plus to align with your team's unique development workflow. Customize it to suit your specific needs.
