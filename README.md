@@ -19,7 +19,7 @@ Welcome to Jigit Plus - Next.js Edition! This repository contains an enhanced ve
 1. Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/adi-igit/Jigit-Plus
+git clone https://github.com/adi-igit/Jigit-Plus.git
 ```
 
 2. Navigate to the project directory:
