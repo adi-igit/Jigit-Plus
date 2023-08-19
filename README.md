@@ -1,40 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Jigit Plus - Next.js Edition
 
-### This project was build for implementing Ecommerce functionallity.
+![JIGIT+](https://res.cloudinary.com/dd40wbf0z/image/upload/v1692416004/3_qsuk2q.png)
 
-## Getting Started
+Welcome to Jigit Plus - Next.js Edition! This repository contains an enhanced version of the Jigit tool, specifically tailored for Next.js projects. Jigit Plus offers seamless integration between your Next.js application and Atlassian Jira, streamlining your development workflow.
 
-First, run the development server:
+## Features
+
+- **Automatic Commit Messages**: Jigit Plus generates well-structured commit messages with Jira issue links, ensuring consistency and saving you time.
+
+- **Effortless Branch Creation**: Create branches effortlessly with the correct naming convention directly from your Next.js development environment.
+
+- **Interactive Jira Integration**: Stay within your development workspace while interacting with Jira issues. View issue details, change status, and manage assignees without switching tabs.
+
+- **Time Logging Made Easy**: Log time spent on tasks directly from your Next.js IDE, simplifying your time tracking process.
+
+- **Custom Workflow Configuration**: Tailor Jigit Plus to align with your team's unique development workflow. Customize it to suit your specific needs.
+
+## Installation
+
+1. Clone this repository to your local machine:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+git clone https://github.com/adi-igit/Jigit-Plus
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Navigate to the project directory:
+```bash
+cd Jigit-Plus-Next.js
+```
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+3. Install project dependencies:
+4. ```bash
+npm install
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+5. Run the Next.js development server:
+```bash
+npm run dev
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Start enhancing your Next.js development workflow with Jigit Plus!
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Usage
 
-## Learn More
+1. Open your Next.js project in your preferred code editor.
+2. Utilize Jigit Plus commands and shortcuts to create branches.
+3. Observe how Jigit Plus enhances your development process by reducing manual steps and minimizing context switching.
 
-To learn more about Next.js, take a look at the following resources:
+## Feedback and Contributions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+If you come across any issues, have suggestions, or wish to contribute to Jigit Plus - Next.js Edition, feel free to:
+* Open an [issue](https://github.com/adi-igit/Jigit-Plus/issues) on GitHub.
+* Fork the repository and submit a pull request.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+I appreciate your contributions and look forward to making Jigit Plus even more effective with your involvement.
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Jigit Plus - Next.js Edition is released under the [MIT](https://github.com/adi-igit/Jigit-Plus/blob/main/LICENSE) License. You are welcome to modify, distribute, and use it as needed.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
