@@ -23,16 +23,19 @@ git clone https://github.com/adi-igit/Jigit-Plus
 ```
 
 2. Navigate to the project directory:
+   
 ```bash
 cd Jigit-Plus
 ```
 
 3. Install project dependencies:
-4. ```bash
+
+```bash
 npm install
 ```
 
 5. Run the Next.js development server:
+   
 ```bash
 npm run dev
 ```
